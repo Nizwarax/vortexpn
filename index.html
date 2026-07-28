@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VORTEX // SERVER GATEWAY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+    body { font-family: 'JetBrains Mono', monospace; background-color: #060919; }
+    .card-blue { background-color: #0c132b; border: 1px solid #1e295b; }
+    .btn-blue { background-color: #131d42; border: 1px solid #283c79; color: #93c5fd; }
+    .btn-blue:hover { border-color: #3b82f6; color: #fff; background-color: #1a2756; }
+    .btn-active { border-color: #60a5fa !important; color: #fff !important; background-color: #1d4ed8 !important; }
+  </style>
+</head>
+<body class="text-blue-200 min-h-screen flex flex-col justify-between p-4 max-w-md mx-auto selection:bg-blue-600 selection:text-white">
+
+  <main class="space-y-4 flex-grow mt-4">
+    <!-- WELCOME TEXT BANNER -->
+    <div class="text-center card-blue p-4 rounded-xl border-dashed border-blue-500">
+      <h1 class="text-lg font-bold text-white tracking-wider mb-2">⚡ VORTEX<span class="text-blue-400">.sys</span></h1>
+      <p class="text-xs text-blue-300 leading-relaxed">
+        Selamat datang di server vless vmess trojan railway VORTEX. Silahkan buat config di bawah ini yang sesuai dengan bug mu.
+      </p>
+      <div class="flex justify-center items-center gap-2 mt-3 border-t border-blue-950/50 pt-3">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <p class="text-[11px] text-emerald-300 font-bold tracking-widest">ONLINE CLIENTS: 1 ORG</p>
+      </div>
+    </div>
+
+    <!-- LIVE CONNECTED IP LIST BOX -->
+    <div class="card-blue p-3 rounded-xl">
+      <p class="text-[9px] text-blue-400 font-bold tracking-wider mb-1.5 uppercase">🌐 Active Connected IP Address</p>
+      <div class="bg-[#040610] rounded-lg p-2 border border-blue-950">
+        <div id="ip-list-area" class="text-[11px] text-blue-400/70 py-1 font-mono">● 127.0.0.1 <span class="text-emerald-400 font-bold">(You)</span></div>
+      </div>
+    </div>
+
+    <!-- CONFIG CONTROL BOX -->
+    <div class="card-blue p-4 rounded-xl space-y-4">
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div>
+          <label class="text-[10px] text-blue-400 font-bold block mb-1">UUID OTOMATIS</label>
+          <input id="uuidInput" type="text" value="Loading..." readonly class="w-full bg-[#060917] border border-blue-900 rounded p-1.5 text-white font-mono focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="text-[10px] text-blue-400 font-bold block mb-1">HOST DOMAIN</label>
+          <input id="hostInput" type="text" value="Loading..." class="w-full bg-[#060917] border border-blue-900 rounded p-1.5 text-white font-mono focus:outline-none focus:border-blue-500">
+        </div>
+      </div>
+
+      <!-- KOLOM INPUT BUG HOST -->
+      <div>
+        <label class="text-[10px] text-blue-400 font-bold block mb-1">BUG HOST (SNI / CDN)</label>
+        <input id="bugInput" type="text" value="suporte.garena.com" class="w-full bg-[#060917] border border-blue-900 rounded p-1.5 text-white font-mono focus:outline-none focus:border-blue-500">
+      </div>
+
+      <!-- KATEGORI 1: NORMAL BUG SNI -->
+      <div class="space-y-2">
+        <div class="border-l-2 border-blue-500 pl-2">
+          <p class="text-[11px] font-bold text-blue-200 tracking-wider">BUG SNI (NORMAL / STANDAR)</p>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="buildConfig('vless', 'sni')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all">VLESS STD</button>
+          <button onclick="buildConfig('vmess', 'sni')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all">VMESS STD</button>
+          <button onclick="buildConfig('trojan', 'sni')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all">TROJAN STD</button>
+        </div>
+      </div>
+
+      <!-- KATEGORI 2: REVERSE BUG SNI -->
+      <div class="space-y-2">
+        <div class="border-l-2 border-amber-500 pl-2">
+          <p class="text-[11px] font-bold text-amber-200 tracking-wider">BUG SNI (REVERSE / GAMBAR 2 STYLE)</p>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="buildConfig('vless', 'sni_reverse')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all text-amber-300 border-amber-950">VLESS REV</button>
+          <button onclick="buildConfig('vmess', 'sni_reverse')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all text-amber-300 border-amber-950">VMESS REV</button>
+          <button onclick="buildConfig('trojan', 'sni_reverse')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all text-amber-300 border-amber-950">TROJAN REV</button>
+        </div>
+      </div>
+
+      <!-- KATEGORI 3: CDN WEBSOCKET WS -->
+      <div class="space-y-2">
+        <div class="border-l-2 border-indigo-500 pl-2">
+          <p class="text-[11px] font-bold text-indigo-200 tracking-wider">BUG CDN (WEBSOCKET PROXY)</p>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="buildConfig('vless', 'cdn')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all">VLESS</button>
+          <button onclick="buildConfig('vmess', 'cdn')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all">VMESS</button>
+          <button onclick="buildConfig('trojan', 'cdn')" class="btn-blue py-2 rounded-lg text-xs font-bold tracking-widest transition-all">TROJAN</button>
+        </div>
+      </div>
+
+      <!-- AREA OUTPUT CONFIG -->
+      <div id="output-area" class="hidden space-y-1.5 bg-[#040610] p-3 rounded-lg border border-blue-950">
+        <div class="flex justify-between items-center">
+          <span id="out-type" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white">VLESS</span>
+          <button onclick="copyOutConfig()" class="text-[10px] text-blue-400 font-bold hover:underline">COPY</button>
+        </div>
+        <p id="configText" class="text-[11px] font-mono text-blue-100 break-all bg-black/40 p-2 rounded border border-blue-950 max-h-24 overflow-y-auto">Loading...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center text-[10px] text-blue-500 mt-6">&copy; 2026 VORTEX BLUE TERMINAL.</footer>
+
+  <script>
+    // Sinkronisasi data UUID, Host, dan Jalur Path dari backend server js
+    async function fetchServerInfo() {
+      try {
+        const response = await fetch('/__info');
+        if (!response.ok) return;
+        const data = await response.json();
+        
+        if (data.uuid) document.getElementById('uuidInput').value = data.uuid;
+        if (data.domain) document.getElementById('hostInput').value = data.domain;
+        if (data.paths) window.serverActivePaths = data.paths;
+      } catch (e) {
+        console.error("Gagal sinkronisasi data dari backend server.");
+      }
+    }
+
+    fetchServerInfo();
+
+    // Deteksi IP Pengunjung
+    try {
+      fetch('https://api.ip.sb/geoip')
+        .then(res => res.json())
+        .then(data => {
+          if(data.ip) {
+            document.getElementById('ip-list-area').innerHTML = `● ` + data.ip + ` <span class="text-emerald-400 font-bold">(You)</span>`;
+          }
+        }).catch(e => {});
+    } catch(e) {}
+
+    // Fungsi Utama Generator Config (SUDAH DIHAPUS ?ed=2560 BERSIH)
+    function buildConfig(protocol, type) {
+      document.querySelectorAll('button').forEach(b => b.classList.remove('btn-active'));
+      if(event && event.target) event.target.classList.add('btn-active');
+      
+      const uuid = document.getElementById('uuidInput').value.trim();
+      const host = document.getElementById('hostInput').value.trim(); 
+      const bugHost = document.getElementById('bugInput').value.trim(); 
+      const area = document.getElementById('output-area');
+      const label = document.getElementById('out-type');
+      const txt = document.getElementById('configText');
+
+      const pathsMapping = window.serverActivePaths || { vless: '/vless-argo', vmess: '/vmess-argo', trojan: '/trojan-argo' };
+      let basePath = pathsMapping[protocol] || '/' + protocol + '-argo';
+      
+      let remark = 'VORTEX-' + protocol.toUpperCase() + '-' + type.toUpperCase();
+      let configResult = '';
+      label.innerText = remark;
+
+      if (type === 'sni') {
+        if (protocol === 'vless') {
+          configResult = 'vless://' + uuid + '@' + bugHost + ':443?encryption=none&security=tls&sni=' + host + '&fp=randomized&type=ws&host=' + host + '&path=' + encodeURIComponent(basePath) + '#' + encodeURIComponent(remark);
+        } else if (protocol === 'vmess') {
+          let jsonVmess = { v: "2", ps: remark, add: bugHost, port: "443", id: uuid, aid: "0", scy: "auto", net: "ws", type: "none", host: host, path: basePath, tls: "tls", sni: host };
+          configResult = 'vmess://' + btoa(JSON.stringify(jsonVmess));
+        } else if (protocol === 'trojan') {
+          configResult = 'trojan://' + uuid + '@' + bugHost + ':443?security=tls&sni=' + host + '&type=ws&host=' + host + '&path=' + encodeURIComponent(basePath) + '#' + encodeURIComponent(remark);
+        }
+      } 
+      else if (type === 'sni_reverse') {
+        if (protocol === 'vless') {
+          configResult = 'vless://' + uuid + '@' + host + ':443?encryption=none&security=tls&sni=' + bugHost + '&fp=randomized&type=ws&host=' + bugHost + '&path=' + encodeURIComponent(basePath) + '#' + encodeURIComponent(remark);
+        } else if (protocol === 'vmess') {
+          let jsonVmess = { v: "2", ps: remark, add: host, port: "443", id: uuid, aid: "0", scy: "auto", net: "ws", type: "none", host: bugHost, path: basePath, tls: "tls", sni: bugHost };
+          configResult = 'vmess://' + btoa(JSON.stringify(jsonVmess));
+        } else if (protocol === 'trojan') {
+          configResult = 'trojan://' + uuid + '@' + host + ':443?security=tls&sni=' + bugHost + '&type=ws&host=' + bugHost + '&path=' + encodeURIComponent(basePath) + '#' + encodeURIComponent(remark);
+        }
+      } 
+      else if (type === 'cdn') {
+        let pathBug = '/' + bugHost + basePath;
+        if (protocol === 'vless') {
+          configResult = 'vless://' + uuid + '@' + host + ':443?encryption=none&security=tls&sni=' + host + '&fp=randomized&type=ws&host=' + host + '&path=' + encodeURIComponent(pathBug) + '#' + encodeURIComponent(remark);
+        } else if (protocol === 'vmess') {
+          let jsonVmess = { v: "2", ps: remark, add: host, port: "443", id: uuid, aid: "0", scy: "none", net: "ws", type: "none", host: host, path: pathBug, tls: "tls", sni: host };
+          configResult = 'vmess://' + btoa(JSON.stringify(jsonVmess));
+        } else if (protocol === 'trojan') {
+          configResult = 'trojan://' + uuid + '@' + host + ':443?security=tls&sni=' + host + '&type=ws&host=' + host + '&path=' + encodeURIComponent(pathBug) + '#' + encodeURIComponent(remark);
+        }
+      }
+
+      txt.innerText = configResult;
+      area.classList.remove('hidden');
+    }
+
+    function copyOutConfig() {
+      navigator.clipboard.writeText(document.getElementById('configText').innerText);
+      alert('Config Berhasil Disalin!');
+    }
+  </script>
+</body>
+</html>
