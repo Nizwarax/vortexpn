@@ -23,4 +23,4 @@ jobs:
           context: .
           push: true
           # Pastikan username-docker-kamu diganti pake username asli Docker Hub-mu ya!
-          tags: ddfathu/vlesudp:latest 
+          tags: nizwarax/vortexpn:latest 
